@@ -1,3 +1,32 @@
+const listaDeContato = [
+    {
+        id: 1,
+        nome: "Amor❤️",
+        ultimaMensagem: "Quem é Luana que curtiu sua foto?",
+        horarioUltimaMensagem: "18:41",
+        avatar: "./src/assets/images/jessica--drew.png"
+    },
+
+    {
+        id: 3,
+        nome: "Pablo",
+        ultimaMensagem: "Meus parabéns pela sua vaga! :)",
+        horarioUltimaMensagem: "17:38",
+        avatar: "./src/assets/images/greg--james.png"
+    },
+
+    {
+        id: 4,
+        nome: "Luana minha ex",
+        ultimaMensagem: "Vamos voltar? estou com sdds 😔",
+        horarioUltimaMensagem: "16:19",
+        avatar: "./src/assets/images/emily--dorson.png"
+    }
+
+];
+
+
+
 // DOMContentLoaded -> É um evento do JavaScript que acontece quando todo o HTML da página já foi carregado.
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -81,4 +110,56 @@ function adicionarMensagem(tipoMensagem, texto) {
             enviarMensagem();
         }
     });
+
+
+function carregarContatos() {
+
+/*
+Loop - laço de repetição 
+while 
+FOR 
+ for 
+ for of 
+ for in 
+ for each
+*/
+
+        const divContatosElement = document.querySelector(".div--contacts");
+
+
+        listaDeContato.forEach((contato, index) => {
+            console.log(contato);
+
+            setTimeout(() => {
+        
+            const divParentElement = document.createElement("div");
+            divParentElement.classList.add("flex", "area--contact", "fade-in");
+
+            divParentElement.innerHTML = `
+                        <div class="flex justify--content--center align--items--center flex--1">
+                            <img class="avatar--left--bar" src="${contato.avatar}" />
+                        </div>
+
+                        <div class="flex flex--direction--column justify--content--center flex--3">
+                            <div class="flex align--items--center infos--contact">
+                                <div class="font--family font--weight--bold">${contato.nome}</div>
+                            </div>
+
+                            <div class="last--message">${contato.ultimaMensagem}</div>
+                        </div>
+
+                        <div class="flex flex--direction--column justify--content--center align--items--end flex--1 div--last--messages--info">
+                        <div class="flex justify--content--center align--items--center quantity--not--viewed--messages background--green">1</div>
+                            <div class="hour--last--message">${contato.horarioUltimaMensagem}</div>
+                        </div>
+            `;
+          divContatosElement.appendChild(divParentElement);
+          }, index * 1000);        
+        });    
+    };
+
+    setTimeout(() => {
+        carregarContatos();
+    }, 2000);
+
 });
