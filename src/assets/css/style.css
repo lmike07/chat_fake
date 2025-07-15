@@ -210,6 +210,11 @@
     font-size: 16px;
 }
 
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
