@@ -67,17 +67,72 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputBuscaMessagem = document.getElementById ("search-message");
     console.log(inputBuscaMessagem);
 
+     inputBuscaMessagem.addEventListener("input", () => {
+        const termoDeBusca = inputBuscaMessagem.value;
+        console.log(`O termo de buscado foi: ${termoDeBusca}`);
+        buscarMensagem(termoDeBusca);
+    });
+
     inputBuscaMessagem.addEventListener("input", () => {
         const termoDeBusca = inputBuscaMessagem.value;
         console.log(`O termo de buscado foi: ${termoDeBusca}`);
         carregarContatos(termoDeBusca);
     });
 
-     inputBuscaMessagem.addEventListener("input", () => {
-        const termoDeBusca = inputBuscaMessagem.value;
-        console.log(`O termo de buscado foi: ${termoDeBusca}`);
-        buscarMensagem(termoDeBusca);
+    listaMensgens.addEventListener("click", (event) => {
+        if(event.target.classList.contains("emoji-reaction")) {
+            const mensagem = event.target.closest('.message');
+            abrirMenuReacao(mensagem);
+        }
     });
+
+    const listaEmojis = ["&#128525;","&#128531;","&#128545;","&#129505;",];
+
+    const listaEmojis2 = ["😍","😓","😡","🧡",];
+
+    function abrirMenuReacao(mensagem) {
+        console.log(mensagem)
+        const areaEmojis = mensagem.querySelector(".area-emojis");
+
+        listaEmojis2.forEach((emoji) => {
+            const emojiElement = document.createElement("span");
+            emojiElement.classList.add("emoji-opcao", "cursor--pointer");
+
+            // innerText -> texto sem formatação
+            // innerHTML -> renderiza HTML 
+            // textContent -> renderiza um texto com formatação
+            //emojiElement.innerHTML = emoji;
+
+            emojiElement.textContent = emoji;
+
+            emojiElement.addEventListener("click", () => {
+                console.log(mensagem);
+                console.log(emoji);
+                alternarEmojis(mensagem, emoji);
+            });
+
+            areaEmojis.appendChild(emojiElement);
+        });
+    };
+
+    function alternarEmojis(mensagem, emoji) {
+        let reacaoExistente = mensagem.querySelector(".emoji-selecionado");
+
+        if (reacaoExistente && reacaoExistente.textContent.includes(emoji)) {
+            reacaoExistente.textContent = reacaoExistente.textContent.replace(emoji, "");
+                if (reacaoExistente.textContent.trim() === "") {
+                    reacaoExistente.remove();
+                };
+        } else {
+            if (!reacaoExistente) {
+                reacaoExistente = document.createElement("div");
+                reacaoExistente.classList.add("emoji-selecionado")
+                mensagem.appendChild(reacaoExistente);
+            }
+
+            reacaoExistente.textContent += emoji;   
+        }
+    };
 
 
     function buscarMensagem(termo) {
@@ -187,7 +242,9 @@ function renderizarMensagem(tipo, mensagem, horario) {
                         ${mensagem}
                     </div>
 
-                    <div class="flex--1 flex flex--direction--row justify--content--end align--items--center font--size--12 infos--message">                 
+                    <div class="flex--1 flex flex--direction--row justify--content--end align--items--center font--size--12 infos--message">    
+                        <div class="emoji-reaction cursor--pointer">&#128515;</div>
+                        <div class="area-emojis"></div>
                         <div>${horario}</div>
                         <img src="./src/assets/icons/viewed.svg" />
                     </div>            

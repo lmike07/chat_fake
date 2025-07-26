@@ -229,3 +229,28 @@
 .fade-in {
     animation: fadeIn 0.5s ease-in-out;
 }
+
+.area-opcao {
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.area-emojis {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.emoji-opcao {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.emoji-opcao:hover {
+    transform: scale(1.5);
+}
+
+.emoji-selecionado {
+    margin-top: 5px;
+    font-size: 25px;
+}
